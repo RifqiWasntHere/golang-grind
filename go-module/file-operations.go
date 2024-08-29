@@ -18,7 +18,6 @@ func CreateNewFile(name string, content string) error {
 	return nil
 }
 
-// Buatkan fungsi untuk read file, WElllllll
 func ReadFile(filename string) (string, error) {
 	file, err := os.OpenFile(filename, os.O_RDONLY, 0666)
 	if err != nil {
@@ -39,7 +38,6 @@ func ReadFile(filename string) (string, error) {
 	return content, err
 }
 
-// Bangg kalo mau nambahin konten ke existing file gimana bang ? siyaaaaaap
 func AppendToFile(filename string, content string) error {
 	file, err := os.OpenFile(filename, os.O_RDWR|os.O_APPEND, 0666)
 	if err != nil {
