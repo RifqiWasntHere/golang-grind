@@ -2,12 +2,11 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"io"
 	"os"
 )
 
-func createNewFile(name string, content string) error {
+func CreateNewFile(name string, content string) error {
 	file, err := os.OpenFile(name, os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil {
 		return err
@@ -20,7 +19,7 @@ func createNewFile(name string, content string) error {
 }
 
 // Buatkan fungsi untuk read file, WElllllll
-func readFile(filename string) (string, error) {
+func ReadFile(filename string) (string, error) {
 	file, err := os.OpenFile(filename, os.O_RDONLY, 0666)
 	if err != nil {
 		return "", err
@@ -41,7 +40,7 @@ func readFile(filename string) (string, error) {
 }
 
 // Bangg kalo mau nambahin konten ke existing file gimana bang ? siyaaaaaap
-func appendToFile(filename string, content string) error {
+func AppendToFile(filename string, content string) error {
 	file, err := os.OpenFile(filename, os.O_RDWR|os.O_APPEND, 0666)
 	if err != nil {
 		return err
@@ -55,10 +54,5 @@ func appendToFile(filename string, content string) error {
 }
 
 func main() {
-	// createNewFile("Biodata", "Namaku Rifqi AHIHIHIHIHIH")
 
-	appendToFile("biodata.txt", "Tapi boong cihuuuuuy")
-
-	result, err := readFile("biodata.txt")
-	fmt.Println(result, err)
 }
