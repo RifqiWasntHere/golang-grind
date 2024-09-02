@@ -4,25 +4,33 @@ import (
 	"testing"
 
 	file_operations "github.com/RifqiWasntHere/golang-module"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestCreateNewFile(t *testing.T) {
-	result := file_operations.CreateNewFile("test.txt", "false")
-	if result != nil {
-		t.Fail()
-	}
+	t.Run("SubTestCreateNewFile", func(t *testing.T) {
+		result := file_operations.CreateNewFile("test.txt", "false")
+		if result != nil {
+			t.FailNow()
+		}
+	})
+
+	t.Run("SubTestCreateNewFile2", func(t *testing.T) {
+		result := file_operations.CreateNewFile("test2.txt", "false")
+		if result != nil {
+			t.Fail()
+		}
+	})
 }
 
 func TestReadFile(t *testing.T) {
 	_, err := file_operations.ReadFile("test.txt")
-	if err != nil {
-		t.Fatal("ada yang salah ini")
-	}
+
+	require.Equal(t, nil, err, "require == FailNow()!")
 }
 
 func TestAppendToFile(t *testing.T) {
-	result := file_operations.AppendToFile("tet.txt", "\n apa pula")
-	if result != nil {
-		t.Fatal("ada yang salah ini")
-	}
+	result := file_operations.AppendToFile("test.txt", "\n apa pula")
+	assert.Equal(t, nil, result, "assert == Fail()!")
 }
