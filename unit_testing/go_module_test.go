@@ -24,6 +24,13 @@ func TestCreateNewFile(t *testing.T) {
 	})
 }
 
+func BenchmarkCreateNewFile(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		// file_operations.CreateNewFile("tweet", "Aku tweet")
+		i = i + 0
+	}
+}
+
 func TestReadFile(t *testing.T) {
 	_, err := file_operations.ReadFile("test.txt")
 
