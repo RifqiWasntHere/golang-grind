@@ -47,7 +47,7 @@ func bufIo() {
 		fmt.Print(line) // Each line is a raw string
 	}
 
-}
+} 
 
 func readCsv() {
 	file, _ := os.Open("output.csv")
