@@ -4,13 +4,14 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"go_database/db"
 	"log"
 	"testing"
 	"time"
 )
 
 func TestInsert(t *testing.T) {
-	db := GetDatabase()
+	db := db.GetDatabase()
 	defer db.Close()
 
 	ctx := context.Background()
@@ -22,7 +23,7 @@ func TestInsert(t *testing.T) {
 }
 
 func TestInject(t *testing.T) {
-	db := GetDatabase()
+	db := db.GetDatabase()
 	defer db.Close()
 
 	ctx := context.Background()
@@ -53,7 +54,7 @@ func TestInject(t *testing.T) {
 }
 
 func TestPrepareInject(t *testing.T) {
-	db := GetDatabase()
+	db := db.GetDatabase()
 	defer db.Close()
 
 	ctx := context.Background()
@@ -76,13 +77,14 @@ func TestPrepareInject(t *testing.T) {
 
 // Basic Table
 func TestRead(t *testing.T) {
-	db := GetDatabase()
+	db := db.GetDatabase()
 	defer db.Close()
 
 	ctx := context.Background()
 
-	query := "SELECT userId, userName, userOccupation FROM Users"
-	rows, err := db.QueryContext(ctx, query)
+	query := "SELECT userId, userName, userOccupation FROM Users WHERE id=?"
+	id := "12312"
+	rows, err := db.QueryContext(ctx, query, id)
 
 	if err != nil {
 		fmt.Println("Query Failed")
@@ -117,7 +119,7 @@ func TestInsertComplex(t *testing.T) {
 }
 
 func TestReadComplex(t *testing.T) {
-	db := GetDatabase()
+	db := db.GetDatabase()
 	defer db.Close()
 
 	ctx := context.Background()
