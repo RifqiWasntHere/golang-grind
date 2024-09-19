@@ -20,6 +20,37 @@ func TestInsert(t *testing.T) {
 	}
 }
 
+func TestInject(t *testing.T) {
+	db := GetDatabase()
+	defer db.Close()
+
+	ctx := context.Background()
+
+	userName := "Liu Bang"
+	married := true
+
+	query := "SELECT userName, occupation FROM UsersComplex WHERE userName = ? AND married = ?"
+	rows, err := db.QueryContext(ctx, query, userName, married)
+
+	if err != nil {
+		fmt.Println("Query failed:", err)
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var userName, occupation string
+
+		err = rows.Scan(&userName, &occupation)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		fmt.Printf("Username : %s\nOccupation : %s\n", userName, occupation)
+	}
+
+}
+
 // Basic Table
 func TestRead(t *testing.T) {
 	db := GetDatabase()
