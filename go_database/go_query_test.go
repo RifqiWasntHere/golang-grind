@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"log"
 	"testing"
 	"time"
 )
@@ -49,6 +50,28 @@ func TestInject(t *testing.T) {
 		fmt.Printf("Username : %s\nOccupation : %s\n", userName, occupation)
 	}
 
+}
+
+func TestPrepareInject(t *testing.T) {
+	db := GetDatabase()
+	defer db.Close()
+
+	ctx := context.Background()
+
+	stmt, err := db.PrepareContext(ctx, "INSERT INTO Users(userId, userName) VALUES(?, ?)")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer stmt.Close()
+
+	id, name := "1231212", "koproy"
+	err = stmt.QueryRowContext(ctx, id, name).Scan(&id, &name)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println("Data Inserted")
 }
 
 // Basic Table
