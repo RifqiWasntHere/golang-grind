@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 )
 
@@ -44,4 +45,22 @@ func TestRouteWithParams(t *testing.T) {
 	body, _ := io.ReadAll(response.Body)
 
 	fmt.Println(string(body))
+}
+
+// And If There's Multiple Value Within a Parameter, Do This :
+func MultiValuedParams(writer http.ResponseWriter, request *http.Request) {
+	query := request.URL.Query() //Hasil dari Query itu berupa string slice
+	payload := query["name"]
+	fmt.Fprint(writer, strings.Join(payload, " "))
+}
+func TestMultiValuedParams(t *testing.T) {
+	request := httptest.NewRequest(http.MethodGet, "http://localhost:8080/home?name=Rifqi&name=Fadhillah", nil)
+	recorder := httptest.NewRecorder()
+
+	MultiValuedParams(recorder, request)
+	response := recorder.Result()
+	body, _ := io.ReadAll(response.Body)
+
+	fmt.Println(string(body))
+
 }
