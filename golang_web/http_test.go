@@ -24,3 +24,24 @@ func TestHttp(t *testing.T) {
 
 	fmt.Println(string(body))
 }
+
+// Route + Request Parameter
+func RouteWithParamsHandler(writer http.ResponseWriter, request *http.Request) {
+	name := request.URL.Query().Get("name")
+	if name == "" {
+		fmt.Fprint(writer, "Hello, Anon")
+	} else {
+		fmt.Fprintf(writer, "Hello, %s", name)
+	}
+}
+
+func TestRouteWithParams(t *testing.T) {
+	request := httptest.NewRequest(http.MethodGet, "http://localhost:8080/home?name=Rifqi", nil)
+	recorder := httptest.NewRecorder()
+
+	RouteWithParamsHandler(recorder, request)
+	response := recorder.Result()
+	body, _ := io.ReadAll(response.Body)
+
+	fmt.Println(string(body))
+}
