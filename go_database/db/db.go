@@ -15,7 +15,7 @@ func GetDatabase() *sql.DB {
 	// load godotenv
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatalln("Failed to load .env")
+		log.Fatalln(err)
 	}
 
 	// Retrieve environment variables
