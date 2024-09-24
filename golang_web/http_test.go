@@ -64,3 +64,39 @@ func TestMultiValuedParams(t *testing.T) {
 	fmt.Println(string(body))
 
 }
+
+// Handler with HEADER
+func HeaderHandler(writer http.ResponseWriter, request *http.Request) {
+	contentType := request.Header.Get("content-type")
+	fmt.Fprint(writer, "Content Type is : "+contentType)
+}
+
+func TestHeaderHandler(t *testing.T) {
+	request := httptest.NewRequest(http.MethodGet, "http://localhost:8080/", nil)
+	request.Header.Add("content-type", "application/json")
+
+	recorder := httptest.NewRecorder()
+
+	HeaderHandler(recorder, request)
+
+	response := recorder.Result()
+	payload, _ := io.ReadAll(response.Body)
+
+	fmt.Println(string(payload))
+
+}
+
+func ReqHeaderHandler(writer http.ResponseWriter, request *http.Request) {
+	writer.Header().Add("x-powered-by", "rifqicikiwir")
+	fmt.Fprint(writer, "OK")
+}
+
+func TestReqHeaderHandler(t *testing.T) {
+	request := httptest.NewRequest("GET", "http://localhost:8080/", nil)
+	recorder := httptest.NewRecorder()
+
+	ReqHeaderHandler(recorder, request)
+
+	reqHeader := recorder.Header().Get("x-powered-by")
+	fmt.Println(reqHeader)
+}
