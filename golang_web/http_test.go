@@ -100,3 +100,36 @@ func TestReqHeaderHandler(t *testing.T) {
 	reqHeader := recorder.Header().Get("x-powered-by")
 	fmt.Println(reqHeader)
 }
+
+// "POST" Form
+func PostHandler(writer http.ResponseWriter, request *http.Request) {
+	// Below, is the base snippet of how to fetch request body
+	// err := request.ParseForm()
+	// if err != nil {
+	// 	log.Fatal("Parsing Error: ", err)
+	// }
+
+	// firstName := request.PostForm.Get("firstName")
+	// lastName := request.PostForm.Get("lastName")
+
+	firstName := request.PostFormValue("firstName")
+	lastName := request.PostFormValue("lastName")
+
+	fmt.Fprintf(writer, "Hey There, %s %s !", firstName, lastName)
+}
+
+func TestPostHandler(t *testing.T) {
+
+	requestBody := strings.NewReader("firstName=Rifqi&lastName=Fadhillah")
+	request := httptest.NewRequest("POST", "http://localhost:8080/", requestBody) //Somehow, "Reader" is utilized as the func to write body here
+	request.Header.Add("content-type", "application/x-www-form-urlencoded")
+
+	recorder := httptest.NewRecorder()
+
+	PostHandler(recorder, request)
+
+	response := recorder.Result()
+	payload, _ := io.ReadAll(response.Body)
+
+	fmt.Println(string(payload))
+}
