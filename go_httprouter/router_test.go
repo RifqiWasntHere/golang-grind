@@ -11,6 +11,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+var BaseUrl = "http://localhost:8080/"
+
 // This Params Pattern is Named : Named Parameter
 func TestHttpRouter(t *testing.T) {
 
@@ -20,7 +22,7 @@ func TestHttpRouter(t *testing.T) {
 		fmt.Fprintf(w, "Concert : %s, Ticket ID : %s", concertId, ticketId)
 	})
 
-	req := httptest.NewRequest("GET", "http://localhost:8080/concert/kickyourass/ticket/AsdDSjkSc123e", nil)
+	req := httptest.NewRequest("GET", BaseUrl+"concert/kickyourass/ticket/AsdDSjkSc123e", nil)
 	rec := httptest.NewRecorder()
 
 	router.ServeHTTP(rec, req)
@@ -44,7 +46,7 @@ func TestPanicHandler(t *testing.T) {
 		panic("oopsies")
 	})
 
-	req := httptest.NewRequest("GET", "http://localhost:8080/panic", nil)
+	req := httptest.NewRequest("GET", BaseUrl+"panic", nil)
 	rec := httptest.NewRecorder()
 
 	router.ServeHTTP(rec, req)
@@ -62,7 +64,7 @@ func TestNotFoundHandler(t *testing.T) {
 		fmt.Fprint(w, "Page Not Found 404")
 	})
 
-	req := httptest.NewRequest("GET", "http://localhost:8080/404", nil)
+	req := httptest.NewRequest("GET", BaseUrl+"404", nil)
 	rec := httptest.NewRecorder()
 
 	router.ServeHTTP(rec, req)
@@ -82,7 +84,7 @@ func TestMethodNotAllowedHandler(t *testing.T) {
 		fmt.Fprint(w, "hey there")
 	})
 
-	req := httptest.NewRequest("GET", "http://localhost:8080/", nil)
+	req := httptest.NewRequest("GET", BaseUrl+"", nil)
 	rec := httptest.NewRecorder()
 
 	router.ServeHTTP(rec, req)
