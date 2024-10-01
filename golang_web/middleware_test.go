@@ -16,7 +16,7 @@ func (middleware *LogMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Reques
 	fmt.Println("Getting User JWT")
 	middleware.Handler.ServeHTTP(w, r)
 }
-
+		
 // Error Handler Middleware
 type ErrorHandler struct {
 	Handler http.Handler
