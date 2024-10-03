@@ -15,10 +15,16 @@ type CategoryControllerImpl struct {
 	CategoryService service.CategoryService
 }
 
-func (controller *CategoryControllerImpl) Create(w http.ResponseWriter, r *http.Request, params *httprouter.Params) {
+func NewCategoryController(categoryService service.CategoryService) CategoryController {
+	return &CategoryControllerImpl{
+		CategoryService: categoryService,
+	}
+}
+
+func (controller *CategoryControllerImpl) Create(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	categoryCreateRequest := web.CategoryCreateRequest{}
 	decoder := json.NewDecoder(r.Body)
-	err := decoder.Decode(categoryCreateRequest)
+	err := decoder.Decode(&categoryCreateRequest)
 	helper.PanicIfError(err)
 
 	payload := controller.CategoryService.Create(r.Context(), categoryCreateRequest)
@@ -33,7 +39,8 @@ func (controller *CategoryControllerImpl) Create(w http.ResponseWriter, r *http.
 	helper.PanicIfError(err)
 
 }
-func (controller *CategoryControllerImpl) FindAll(w http.ResponseWriter, r *http.Request, params *httprouter.Params) {
+
+func (controller *CategoryControllerImpl) FindAll(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 
 	payload := controller.CategoryService.FindAll(r.Context())
 	response := web.WebResponse{
@@ -47,8 +54,10 @@ func (controller *CategoryControllerImpl) FindAll(w http.ResponseWriter, r *http
 	helper.PanicIfError(err)
 
 }
-func (controller *CategoryControllerImpl) FindById(w http.ResponseWriter, r *http.Request, params *httprouter.Params) {
+
+func (controller *CategoryControllerImpl) FindById(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	categoryId, err := strconv.Atoi(params.ByName("categoryId"))
+	helper.PanicIfError(err)
 
 	payload := controller.CategoryService.FindById(r.Context(), categoryId)
 	response := web.WebResponse{
@@ -60,12 +69,12 @@ func (controller *CategoryControllerImpl) FindById(w http.ResponseWriter, r *htt
 	w.Header().Add("Content-Type", "application/json")
 	err = json.NewEncoder(w).Encode(response)
 	helper.PanicIfError(err)
-
 }
-func (controller *CategoryControllerImpl) Update(w http.ResponseWriter, r *http.Request, params *httprouter.Params) {
+
+func (controller *CategoryControllerImpl) Update(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	categoryUpdateRequest := web.CategoryUpdateRequest{}
 	decoder := json.NewDecoder(r.Body)
-	err := decoder.Decode(categoryUpdateRequest)
+	err := decoder.Decode(&categoryUpdateRequest)
 	helper.PanicIfError(err)
 
 	payload := controller.CategoryService.Update(r.Context(), categoryUpdateRequest)
@@ -79,8 +88,10 @@ func (controller *CategoryControllerImpl) Update(w http.ResponseWriter, r *http.
 	err = json.NewEncoder(w).Encode(response)
 	helper.PanicIfError(err)
 }
-func (controller *CategoryControllerImpl) Delete(w http.ResponseWriter, r *http.Request, params *httprouter.Params) {
+
+func (controller *CategoryControllerImpl) Delete(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	categoryId, err := strconv.Atoi(params.ByName("categoryId"))
+	helper.PanicIfError(err)
 
 	controller.CategoryService.Delete(r.Context(), categoryId)
 	response := web.WebResponse{
