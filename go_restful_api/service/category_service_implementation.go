@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"database/sql"
+	"go_restful_api/exception"
 	"go_restful_api/helper"
 	"go_restful_api/model/domain"
 	"go_restful_api/model/web"
@@ -26,7 +27,9 @@ func NewCategoryService(categoryRepository repository.CategoryRepository, DB *sq
 }
 
 func (service *CategoryServiceImpl) Create(ctx context.Context, request web.CategoryCreateRequest) web.CategoryResponse {
-	service.Validate.Struct(request)
+	err := service.Validate.Struct(request)
+
+	helper.PanicIfError(err)
 
 	tx, err := service.DB.Begin() //Starts TX
 	helper.PanicIfError(err)
@@ -73,14 +76,17 @@ func (service *CategoryServiceImpl) FindById(ctx context.Context, categoryId int
 	defer helper.CommitOrRollback(tx)
 
 	category, err := service.CategoryRepository.FindById(ctx, tx, categoryId)
-	helper.PanicIfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	// Nah ini contoh response yang pake helper
 	return helper.ToCategoryResponse(category)
 }
 
 func (service *CategoryServiceImpl) Update(ctx context.Context, request web.CategoryUpdateRequest) web.CategoryResponse {
-	service.Validate.Struct(request)
+	err := service.Validate.Struct(request)
+	helper.PanicIfError(err)
 
 	tx, err := service.DB.Begin() //Starts TX
 	helper.PanicIfError(err)
@@ -88,7 +94,9 @@ func (service *CategoryServiceImpl) Update(ctx context.Context, request web.Cate
 	defer helper.CommitOrRollback(tx)
 
 	category, err := service.CategoryRepository.FindById(ctx, tx, request.Id)
-	helper.PanicIfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	/*
 		Kenapa kayak gini ?, Ini penjelasannya.
@@ -116,7 +124,9 @@ func (service *CategoryServiceImpl) Delete(ctx context.Context, categoryId int) 
 	defer helper.CommitOrRollback(tx)
 
 	_, err = service.CategoryRepository.FindById(ctx, tx, categoryId)
-	helper.PanicIfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	service.CategoryRepository.Delete(ctx, tx, categoryId)
 }
