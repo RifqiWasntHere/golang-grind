@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"log"
 	"time"
-
-	_ "github.com/go-sql-driver/mysql"
 )
 
 type DatabaseCreds struct {
