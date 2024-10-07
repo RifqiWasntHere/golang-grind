@@ -3,7 +3,8 @@ GET http://localhost:3000/api/categories
 Accept: application/json
 
 ### Get Category By Id
-GET http://localhost:3000/api/categories/20
+GET http://localhost:3000/api/categories/2
+X-Api-Key: RahasiA
 Accept: application/json
 
 ### Add New Category

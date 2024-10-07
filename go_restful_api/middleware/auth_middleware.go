@@ -10,18 +10,23 @@ type AuthMiddleware struct {
 	Handler http.Handler
 }
 
-func ApiKeyMiddleware(w http.ResponseWriter, r *http.Request) ApiKey {
+func NewAuthMiddleware(handler http.Handler) *AuthMiddleware {
+	return &AuthMiddleware{Handler: handler}
+}
+
+func (middleware *AuthMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.Header.Get("X-Api-Key") == "RahasiA" {
-		return ApiKey{}
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusUnauthorized)
+		middleware.Handler.ServeHTTP(w, r)
+	} else {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusUnauthorized)
 
-	WebResponse := web.WebResponse{
-		Code:   http.StatusBadRequest,
-		Status: "UNAUTHORIZED",
-	}
+		WebResponse := web.WebResponse{
+			Code:   http.StatusBadRequest,
+			Status: "UNAUTHORIZED",
+		}
 
-	helper.CreateResponseBody(w, WebResponse)
+		helper.CreateResponseBody(w, WebResponse)
+	}
 
 }
