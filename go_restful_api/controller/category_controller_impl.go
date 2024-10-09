@@ -95,7 +95,5 @@ func (controller *CategoryControllerImpl) Delete(w http.ResponseWriter, r *http.
 		Status: "OK",
 	}
 
-	w.Header().Add("Content-Type", "application/json")
-	err = json.NewEncoder(w).Encode(response)
-	helper.PanicIfError(err)
+	helper.CreateResponseBody(w, response)
 }
