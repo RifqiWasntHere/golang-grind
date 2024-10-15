@@ -1,0 +1,26 @@
+### Get All Categories
+GET http://localhost:3000/api/categories
+Accept: application/json
+
+### Get Category By Id
+GET http://localhost:3000/api/categories/2
+X-Api-Key: RahasiA
+Accept: application/json
+
+### Add New Category
+POST http://localhost:3000/api/categories
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name":""
+}
+
+### Update Category
+PUT http://localhost:3000/api/categories/1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name":"Bossa Nova Jawa Tengah"
+}
