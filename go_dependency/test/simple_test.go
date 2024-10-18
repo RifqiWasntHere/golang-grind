@@ -20,3 +20,11 @@ func TestSimpleServiceSuccess(t *testing.T) {
 	assert.Nil(t, err)
 	assert.NotNil(t, simpleService)
 }
+
+func TestCleanupFunc(t *testing.T) {
+	connection, cleanup := simple.InitializeCleanUpFunction("Connection 1")
+
+	assert.NotNil(t, connection)
+
+	cleanup()
+}

@@ -3,7 +3,9 @@
 
 package simple
 
-import "github.com/google/wire"
+import (
+	"github.com/google/wire"
+)
 
 func InitializeService(isError bool) (*SimpleService, error) {
 	wire.Build(
@@ -62,4 +64,21 @@ var barValue = &BarService{}
 func InitializeFoobarStructWithValues() *FooBarService {
 	wire.Build(wire.Value(fooValue), wire.Value(barValue), wire.Struct(new(FooBarService), "*"))
 	return nil
+}
+
+// There's also another method called "interface value" of which to assign an interface's value
+
+// Struct field provider
+func InitializeStructFieldProvider() *Configuration {
+	wire.Build(
+		NewApplication,
+		wire.FieldsOf(new(*Application), "Configuration"),
+	)
+	return nil
+}
+
+// Cleanup function
+func InitializeCleanUpFunction(name string) (*Connection, func()) {
+	wire.Build(NewFile, NewConnection)
+	return nil, nil
 }
