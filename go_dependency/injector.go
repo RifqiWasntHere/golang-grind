@@ -16,6 +16,8 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+var categorySet = wire.NewSet(repository.NewCategoryRepository, service.NewCategoryService, controller.NewCategoryController)
+
 func InitializeServer() *http.Server {
 	wire.Build(
 		DBCreds,
@@ -23,9 +25,7 @@ func InitializeServer() *http.Server {
 		validator.New,
 		app.NewRouter,
 		wire.Bind(new(http.Handler), new(*httprouter.Router)),
-		repository.NewCategoryRepository,
-		service.NewCategoryService,
-		controller.NewCategoryController,
+		categorySet,
 		middleware.NewAuthMiddleware,
 		Newserver,
 	)

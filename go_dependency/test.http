@@ -1,5 +1,6 @@
 ### Get All Categories
 GET http://localhost:3000/api/categories
+X-Api-Key: RahasiA
 Accept: application/json
 
 ### Get Category By Id
@@ -19,6 +20,7 @@ Content-Type: application/json
 ### Update Category
 PUT http://localhost:3000/api/categories/1
 Accept: application/json
+X-Api-Key: RahasiA
 Content-Type: application/json
 
 {

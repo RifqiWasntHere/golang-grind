@@ -8,6 +8,7 @@ package main
 
 import (
 	"github.com/go-playground/validator"
+	"github.com/google/wire"
 	"go_restful_api/app"
 	"go_restful_api/controller"
 	"go_restful_api/middleware"
@@ -34,3 +35,7 @@ func InitializeServer() *http.Server {
 	server := Newserver(authMiddleware)
 	return server
 }
+
+// injector.go:
+
+var categorySet = wire.NewSet(repository.NewCategoryRepository, service.NewCategoryService, controller.NewCategoryController)
