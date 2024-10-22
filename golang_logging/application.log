@@ -1,0 +1,24 @@
+time="2024-10-22T14:43:45+07:00" level=info msg=Watchamachalit
+time="2024-10-22T14:43:45+07:00" level=warning msg=Watchamachalit
+time="2024-10-22T14:43:45+07:00" level=error msg=Watchamachalit
+time="2024-10-22T14:48:43+07:00" level=info msg=Watchamachalit
+time="2024-10-22T14:48:43+07:00" level=warning msg=Watchamachalit
+time="2024-10-22T14:48:43+07:00" level=error msg=Watchamachalit
+level=info msg=Watchamachalit
+level=warning msg=Watchamachalit
+level=error msg=Watchamachalit
+{"level":"info","msg":"Watchamachalit","time":"2024-10-22T14:51:15+07:00"}
+{"level":"warning","msg":"Watchamachalit","time":"2024-10-22T14:51:15+07:00"}
+{"level":"error","msg":"Watchamachalit","time":"2024-10-22T14:51:15+07:00"}
+{"Logs":{},"level":"info","msg":"Watchamachalit","time":"2024-10-22T14:51:42+07:00"}
+{"Logs":{},"level":"warning","msg":"Watchamachalit","time":"2024-10-22T14:51:42+07:00"}
+{"Logs":{},"level":"error","msg":"Watchamachalit","time":"2024-10-22T14:51:42+07:00"}
+{"@message":"Watchamachalit","@timestamp":"2024-10-22T14:55:16+07:00","level":"info"}
+{"@message":"Watchamachalit","@timestamp":"2024-10-22T14:55:16+07:00","level":"warning"}
+{"@message":"Watchamachalit","@timestamp":"2024-10-22T14:55:16+07:00","level":"error"}
+{"@timestamp":"2024-10-22T14:55:56+07:00","level":"info","msg":"Watchamachalit"}
+{"@timestamp":"2024-10-22T14:55:56+07:00","level":"warning","msg":"Watchamachalit"}
+{"@timestamp":"2024-10-22T14:55:56+07:00","level":"error","msg":"Watchamachalit"}
+{"@timestamp":"2024-10-22T14:56:50+07:00","msg":"Watchamachalit","nil":"info"}
+{"@timestamp":"2024-10-22T14:56:50+07:00","msg":"Watchamachalit","nil":"warning"}
+{"@timestamp":"2024-10-22T14:56:50+07:00","msg":"Watchamachalit","nil":"error"}
