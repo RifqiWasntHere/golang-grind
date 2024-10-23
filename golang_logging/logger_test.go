@@ -51,3 +51,12 @@ func TestFormatter(t *testing.T) {
 	logger.Warn("Watchamachalit")
 	logger.Error("Watchamachalit")
 }
+
+func TestField(t *testing.T) {
+	logger := logrus.New()
+	logger.SetFormatter(&logrus.JSONFormatter{})
+	logger.WithFields(logrus.Fields{
+		"Username": "Rifqi",
+		"IsActive": "True",
+	}).Info("Yes")
+}
