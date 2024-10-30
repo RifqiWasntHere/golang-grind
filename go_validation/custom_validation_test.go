@@ -78,3 +78,23 @@ func TestValidatePin(t *testing.T) {
 		fmt.Println(err)
 	}
 }
+
+// Or rule di validator
+func TestOrRule(t *testing.T) {
+	validate := validator.New()
+
+	type LoginRequest struct {
+		Username string `validate:"required,email|numeric"` //Just add a pipe symbol for OR condition!
+		Password string `validate:"required"`
+	}
+
+	payload := LoginRequest{
+		Username: "as@gmail.com",
+		Password: "ahaide",
+	}
+
+	err := validate.Struct(payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
