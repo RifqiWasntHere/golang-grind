@@ -98,3 +98,37 @@ func TestOrRule(t *testing.T) {
 		fmt.Println(err)
 	}
 }
+
+// Custom validation for cross-field (checking condition within 2 fields)
+func EqualNotSensitive(field validator.FieldLevel) bool {
+	value, _, _, ok := field.GetStructFieldOK2() //To understand of what this method returns, read the docs!
+	//reflect.Value = field's value | reflect.Kind = field's datatype | bool #1 = nullable or not | bool #2 = is the field retrieval success ?\
+	if !ok {
+		fmt.Println("error : field not found")
+	}
+
+	firstValue := strings.ToUpper(field.Field().String())
+	secondValue := strings.ToUpper(value.String())
+
+	return firstValue == secondValue
+}
+
+func TestEqualNotSensitive(t *testing.T) {
+	validate := validator.New()
+	validate.RegisterValidation("eqns", EqualNotSensitive)
+	type ChangePassword struct {
+		OldPassword string `validate:"required"`
+		NewPassword string `validate:"required,eqns=OldPassword"` //Just the same like using eqsfield.
+		//OR rule can be applied like = `validate:"required,eqns=OldPassword|eqns=AnotherFIeld"`
+	}
+
+	payload := ChangePassword{
+		OldPassword: "ikimANEH",
+		NewPassword: "IKIManehh",
+	}
+
+	err := validate.Struct(payload)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
