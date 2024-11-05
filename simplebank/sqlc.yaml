@@ -1,0 +1,16 @@
+version: '2'
+
+sql:
+  - engine: 'postgresql'
+    schema: 'db/migration'
+    queries: 'db/query'
+    # Change to your desired output directory and package name
+    # This example assumes you want generated Go code in `db/sqlc` with package name `sqlc`
+    gen:
+      go:
+        out: 'db/sqlc'
+        package: 'db'
+        emit_json_tags: true # Adds JSON tags to struct fields
+        emit_prepared_queries: false # Generates prepared statements for queries
+        emit_interface: false # Generates interface types for each query
+        emit_exact_table_names: false # Keeps table names exactly as they are in the database
