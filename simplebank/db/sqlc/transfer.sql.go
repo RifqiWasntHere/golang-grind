@@ -41,11 +41,17 @@ func (q *Queries) CreateTransfer(ctx context.Context, arg CreateTransferParams) 
 
 const getTransfer = `-- name: GetTransfer :one
 SELECT id, from_account_id, to_account_id, amount, created_at FROM transfers
-WHERE id = $1 LIMIT $1
+WHERE id = $1 
+LIMIT $2
 `
 
-func (q *Queries) GetTransfer(ctx context.Context, limit int32) (Transfer, error) {
-	row := q.db.QueryRowContext(ctx, getTransfer, limit)
+type GetTransferParams struct {
+	ID    int64 `json:"id"`
+	Limit int32 `json:"limit"`
+}
+
+func (q *Queries) GetTransfer(ctx context.Context, arg GetTransferParams) (Transfer, error) {
+	row := q.db.QueryRowContext(ctx, getTransfer, arg.ID, arg.Limit)
 	var i Transfer
 	err := row.Scan(
 		&i.ID,
