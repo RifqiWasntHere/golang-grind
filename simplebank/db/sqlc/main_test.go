@@ -15,14 +15,20 @@ const (
 )
 
 var testQueries *Queries
+var testDb *sql.DB
 
 func TestMain(m *testing.M) {
-	conn, err := sql.Open(dbDriver, dbSource)
+	var err error
+	// testDb, err := sql.Open(dbDriver, dbSource) // Ini kode lama. ini buat error karena instead of assign sql.Open ke global variabel, itu malah bikin testDb baru di scope function
+	testDb, err = sql.Open(dbDriver, dbSource) // Use "=" to assign to the global testDb
 	if err != nil {
-		log.Fatal("can't connect to the database")
+		log.Fatal("can't connect to the database:", err)
 	}
 
-	testQueries = New(conn)
+	defer testDb.Close() // Close the database connection after all tests have run
 
+	testQueries = New(testDb)
+
+	// Run the tests
 	os.Exit(m.Run())
 }
