@@ -83,7 +83,33 @@ func (store *Store) TransferTx(ctx context.Context, arg TransferTxParams) (Trans
 		if err != nil {
 			return err
 		}
-		// TODO : Update account balance
+
+		// get account, then update its balance
+		fromAccount, err := q.GetAccountForUpdate(context.Background(), arg.FromAccountID)
+		if err != nil {
+			return err
+		}
+
+		result.FromAccount, err = q.UpdateAccount(context.Background(), UpdateAccountParams{
+			ID:      fromAccount.ID,
+			Balance: fromAccount.Balance - arg.Amount,
+		})
+		if err != nil {
+			return err
+		}
+
+		toAccount, err := q.GetAccountForUpdate(context.Background(), arg.ToAccountID)
+		if err != nil {
+			return err
+		}
+
+		result.ToAccount, err = q.UpdateAccount(context.Background(), UpdateAccountParams{
+			ID:      toAccount.ID,
+			Balance: toAccount.Balance + arg.Amount,
+		})
+		if err != nil {
+			return err
+		}
 
 		return nil
 	})

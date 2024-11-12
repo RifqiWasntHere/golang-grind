@@ -1,6 +1,9 @@
 postgres:
 	docker run --name postgres -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:latest
 
+logindb:
+	docker exec -it postgres psql -U root -d simple_bank
+
 createdb:
 	docker exec -it postgres createdb --username=root --owner=root simple_bank
 
@@ -19,4 +22,4 @@ sqlc:
 test:
 	go test -v -cover ./... 
 
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc test
+.PHONY: postgres logindb createdb dropdb migrateup migratedown sqlc test
