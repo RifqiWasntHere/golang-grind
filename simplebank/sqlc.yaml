@@ -14,3 +14,4 @@ sql:
         emit_prepared_queries: false # Generates prepared statements for queries
         emit_interface: false # Generates interface types for each query
         emit_exact_table_names: false # Keeps table names exactly as they are in the database
+        emit_empty_slices: true
