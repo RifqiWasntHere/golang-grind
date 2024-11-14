@@ -1,0 +1,27 @@
+### Get All Categories
+GET http://localhost:3000/api/categories
+Accept: application/json
+
+### Get Category By Id
+GET http://localhost:3000/api/categories/2
+X-Api-Key: RahasiA
+Accept: application/json
+
+### Create a new account
+POST http://localhost:8080/accounts
+Accept: application/json
+Content-Type: application/json
+
+{
+  "owner":"Rifqi",
+  "currency": "IDC"
+}
+
+### Update Category
+PUT http://localhost:3000/api/categories/1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name":"Bossa Nova Jawa Tengah"
+}
