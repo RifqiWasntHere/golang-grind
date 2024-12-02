@@ -42,7 +42,7 @@ func RandomMoney() int64 {
 
 // Generates a random currency
 func RandomCurrency() string {
-	currencies := []string{"USD", "IDR", "JPY"}
+	currencies := []string{USD, IDR}
 	n := len(currencies)
 	return currencies[rand.Intn(n)]
 }
@@ -51,4 +51,8 @@ func Tambah(a, b int64) int64 {
 	result := a + b
 	fmt.Println(result)
 	return result
+}
+
+func RandomEmail() string {
+	return fmt.Sprintf("%s+@gmail.com", RandomString(5))
 }
