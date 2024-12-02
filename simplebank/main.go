@@ -5,18 +5,18 @@ import (
 	"log"
 	"simplebank/api"
 	db "simplebank/db/sqlc"
+	"simplebank/util"
 
 	_ "github.com/jackc/pgx/v4/stdlib"
 )
 
-const (
-	dbDriver      = "pgx"
-	dbSource      = "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable"
-	serverAddress = "0.0.0.0:8080"
-)
-
 func main() {
-	conn, err := sql.Open(dbDriver, dbSource)
+	config, err := util.LoadConfig(".")
+	if err != nil {
+		log.Fatal("can't load configuration files")
+	}
+
+	conn, err := sql.Open(config.DBDriver, config.DBSource)
 	if err != nil {
 		log.Fatal("can't connect to the database:", err)
 	}
@@ -25,7 +25,7 @@ func main() {
 	store := db.Newstore(conn)
 	server := api.NewServer(store)
 
-	err = server.Start(serverAddress)
+	err = server.Start(config.ServerAddress)
 	if err != nil {
 		log.Fatal("cannot start server:", err)
 	}
